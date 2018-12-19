@@ -16,3 +16,5 @@ use Illuminate\Http\Request;
 Route::get('/users', 'UserController@index');
 Route::post('/users/register', 'UserController@register');
 Route::post('/users/login', 'UserController@login');
+
+Route::apiResource('/pets', 'PetController');
