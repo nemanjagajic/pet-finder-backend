@@ -16,7 +16,7 @@ class Pet extends Migration
         Schema::create('pets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('userId');
-            $table->string('image');
+            $table->binary('image')->nullable();
             $table->string('description');
             $table->double('latitude');
             $table->double('longitude');

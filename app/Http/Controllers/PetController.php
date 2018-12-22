@@ -27,7 +27,6 @@ class PetController extends Controller
     {
         $request->validate([
             'userId' => 'required',
-            'image' => 'required',
             'description' => 'required',
             'latitude' => 'required',
             'longitude' => 'required'
