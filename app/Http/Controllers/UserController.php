@@ -17,6 +17,12 @@ class UserController extends Controller
         return User::get();
     }
 
+
+    public function getById($id)
+    {
+        return User::where('id', $id)->get();
+    }
+
     /**
      * Registers given user
      *
