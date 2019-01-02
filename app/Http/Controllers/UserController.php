@@ -70,7 +70,7 @@ class UserController extends Controller
             return response('Incorrect password', 401);
         }
 
-        return response('Successfully logged in', 200);
+        return response($fetchedUsers, 200);
     }
 
 }
