@@ -19,3 +19,4 @@ Route::post('/users/register', 'UserController@register');
 Route::post('/users/login', 'UserController@login');
 
 Route::apiResource('/pets', 'PetController');
+Route::apiResource('/petAds', 'PetAdController');
