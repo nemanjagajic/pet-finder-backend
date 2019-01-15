@@ -20,6 +20,7 @@ class PetAds extends Migration
             $table->string('description');
             $table->string('locationInfo');
             $table->string('phoneNumber');
+            $table->integer('type');
             $table->timestamps();
         });
     }

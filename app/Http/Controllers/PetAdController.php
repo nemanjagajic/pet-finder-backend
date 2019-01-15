@@ -38,6 +38,7 @@ class PetAdController extends Controller
         $petAd->description = $request->description;
         $petAd->locationInfo = $request->locationInfo;
         $petAd->phoneNumber = $request->phoneNumber;
+        $petAd->type = $request->type;
 
         if ($petAd->save()) {
             return response($petAd, 200);
