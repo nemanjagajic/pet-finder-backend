@@ -20,3 +20,5 @@ Route::post('/users/login', 'UserController@login');
 
 Route::apiResource('/pets', 'PetController');
 Route::apiResource('/petAds', 'PetAdController');
+Route::get('/lostPets', 'PetAdController@getLostPets');
+Route::get('/adoptingPets', 'PetAdController@getAdoptingPets');

@@ -17,6 +17,14 @@ class PetAdController extends Controller
         return PetAd::get();
     }
 
+    public function getLostPets() {
+        return PetAd::where('type', 1)->get();
+    }
+
+    public function getAdoptingPets() {
+        return PetAd::where('type', 2)->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
