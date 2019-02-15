@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -31,25 +32,9 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        $request->validate([
-            'username' => 'required',
-            'fullName' => 'required',
-            'password' => 'required'
-        ]);
+        $user = UserService::register($request);
 
-        // Return error if username already exists
-
-        if (sizeof(User::where('username', $request->username)->get()) > 0) {
-            return response("Username already exists", 409);
-        }
-
-        $user = new User;
-        $user->username = $request->username;
-        $user->fullName = $request->fullName;
-        $user->password = $request->password;
-        $user->phoneNumber = $request->phoneNumber;
-
-        if ($user->save()) {
+        if ($user !== null) {
             return response($user, 200);
         }
     }
@@ -62,21 +47,7 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
-
-        $fetchedUsers = User::where('username', $request->username)->get();
-        if (sizeof($fetchedUsers) === 0) {
-            return response('Username doesn\'t exist', 404);
-        }
-
-        if ($fetchedUsers[0]->password !== $request->password) {
-            return response('Incorrect password', 401);
-        }
-
-        return response($fetchedUsers, 200);
+        return UserService::login($request);
     }
 
 }

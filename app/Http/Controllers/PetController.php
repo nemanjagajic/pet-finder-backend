@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Pet;
+use App\Services\PetService;
 use Illuminate\Http\Request;
 
 class PetController extends Controller
@@ -25,38 +26,11 @@ class PetController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'userId' => 'required',
-            'description' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required'
-        ]);
+        $pet = PetService::savePet($request);
 
-        $pet = new Pet;
-        $pet->image = $request->image;
-        $pet->userId = $request->userId;
-        $pet->description = $request->description;
-        $pet->latitude = $request->latitude;
-        $pet->longitude =  $request->longitude;
-        $pet->street = $request->street;
-        $pet->name = $request->name;
-        $pet->country = $request->country;
-        $pet->city = $request->city;
-
-        if ($pet->save()) {
+        if ($pet !== null) {
             return response($pet, 200);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Pet  $pet
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pet $pet)
-    {
-        //
     }
 
 

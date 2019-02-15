@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\PetAd;
+use App\Services\PetAdService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PetAdController extends Controller
 {
@@ -33,22 +35,9 @@ class PetAdController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'userId' => 'required',
-            'description' => 'required',
-            'locationInfo' => 'required',
-            'phoneNumber' => 'required'
-        ]);
+        $petAd = PetAdService::savePetAd($request);
 
-        $petAd = new PetAd;
-        $petAd->image = $request->image;
-        $petAd->userId = $request->userId;
-        $petAd->description = $request->description;
-        $petAd->locationInfo = $request->locationInfo;
-        $petAd->phoneNumber = $request->phoneNumber;
-        $petAd->type = $request->type;
-
-        if ($petAd->save()) {
+        if ($petAd !== null) {
             return response($petAd, 200);
         }
     }
