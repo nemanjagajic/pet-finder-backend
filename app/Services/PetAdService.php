@@ -16,10 +16,10 @@ class PetAdService
             'phoneNumber' => 'required'
         ]);
 
-        Storage::disk('local')->put('images', $petAdData->image);
+        $imageName = FileService::saveImage($petAdData->image);
 
         $petAd = new PetAd;
-        $petAd->image = $petAdData->image;
+        $petAd->image = $imageName;
         $petAd->userId = $petAdData->userId;
         $petAd->description = $petAdData->description;
         $petAd->locationInfo = $petAdData->locationInfo;
