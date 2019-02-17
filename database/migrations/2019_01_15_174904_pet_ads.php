@@ -16,8 +16,8 @@ class PetAds extends Migration
         Schema::create('petAds', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('userId');
-            $table->binary('image')->nullable();
-            $table->string('description');
+            $table->string('image')->nullable();
+            $table->text('description');
             $table->string('locationInfo');
             $table->string('phoneNumber');
             $table->integer('type');

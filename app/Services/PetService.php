@@ -2,7 +2,6 @@
 
 namespace App\Services;
 use App\Pet;
-use Illuminate\Support\Facades\Storage;
 
 
 class PetService
@@ -16,10 +15,10 @@ class PetService
             'longitude' => 'required'
         ]);
 
-        Storage::disk('local')->put('images', $petData->image);
+        $imageName = FileService::saveImage($petData->image);
 
         $pet = new Pet;
-        $pet->image = $petData->image;
+        $pet->image = $imageName;
         $pet->userId = $petData->userId;
         $pet->description = $petData->description;
         $pet->latitude = $petData->latitude;
