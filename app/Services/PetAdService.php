@@ -16,7 +16,8 @@ class PetAdService
             'phoneNumber' => 'required'
         ]);
 
-        $imageName = FileService::saveImage($petAdData->image);
+        $imageName = $petAdData->image ? FileService::saveImage($petAdData->image) : '';
+
 
         $petAd = new PetAd;
         $petAd->image = $imageName;

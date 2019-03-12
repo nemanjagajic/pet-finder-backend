@@ -15,7 +15,7 @@ class PetService
             'longitude' => 'required'
         ]);
 
-        $imageName = FileService::saveImage($petData->image);
+        $imageName = $petData->image ? FileService::saveImage($petData->image) : '';
 
         $pet = new Pet;
         $pet->image = $imageName;
