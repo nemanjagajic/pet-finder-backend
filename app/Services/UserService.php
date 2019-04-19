@@ -6,15 +6,13 @@ use App\User;
 
 class UserService
 {
-    public static function register($registerData): User
+    public function register($registerData)
     {
         $registerData->validate([
             'username' => 'required',
             'fullName' => 'required',
             'password' => 'required'
         ]);
-
-        // Return error if username already exists
 
         if (sizeof(User::where('username', $registerData->username)->get()) > 0) {
             return response("Username already exists", 409);
@@ -27,13 +25,13 @@ class UserService
         $user->phoneNumber = $registerData->phoneNumber;
 
         if ($user->save()) {
-            return $user;
+            return response($user, 200);
         }
 
         return null;
     }
 
-    public static function login($loginData)
+    public function login($loginData)
     {
         $loginData->validate([
             'username' => 'required',

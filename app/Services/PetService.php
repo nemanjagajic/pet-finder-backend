@@ -6,7 +6,14 @@ use App\Pet;
 
 class PetService
 {
-    public static function savePet($petData): Pet
+    private $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
+    public function savePet($petData): Pet
     {
         $petData->validate([
             'userId' => 'required',
@@ -15,7 +22,7 @@ class PetService
             'longitude' => 'required'
         ]);
 
-        $imageName = $petData->image ? FileService::saveImage($petData->image) : '';
+        $imageName = $petData->image ? $this->fileService->saveImage($petData->image) : '';
 
         $pet = new Pet;
         $pet->image = $imageName;

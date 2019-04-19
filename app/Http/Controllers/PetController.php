@@ -8,52 +8,25 @@ use Illuminate\Http\Request;
 
 class PetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $petService;
+
+    public function __construct(PetService $petService)
     {
-        return Pet::get();
+        $this->petService = $petService;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function index()
+    {
+        return response(Pet::get());
+    }
+
+
     public function store(Request $request)
     {
-        $pet = PetService::savePet($request);
+        $pet = $this->petService->savePet($request);
 
         if ($pet !== null) {
             return response($pet, 200);
         }
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Pet  $pet
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pet $pet)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Pet  $pet
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pet $pet)
-    {
-        //
     }
 }

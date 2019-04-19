@@ -7,7 +7,14 @@ use Illuminate\Support\Facades\Storage;
 
 class PetAdService
 {
-    public static function savePetAd($petAdData): PetAd
+    private $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
+    public function savePetAd($petAdData): PetAd
     {
         $petAdData->validate([
             'userId' => 'required',
@@ -16,8 +23,7 @@ class PetAdService
             'phoneNumber' => 'required'
         ]);
 
-        $imageName = $petAdData->image ? FileService::saveImage($petAdData->image) : '';
-
+        $imageName = $petAdData->image ? $this->fileService->saveImage($petAdData->image) : '';
 
         $petAd = new PetAd;
         $petAd->image = $imageName;

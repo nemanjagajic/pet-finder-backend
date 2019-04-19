@@ -8,46 +8,34 @@ use App\User;
 
 class UserController extends Controller
 {
-    /**
-     * Returns all users
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function index()
     {
-        return User::get();
+        return response(User::get());
     }
 
 
     public function getById($id)
     {
-        return User::where('id', $id)->get();
+        return response(User::where('id', $id)->get());
     }
 
-    /**
-     * Registers given user
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     */
+
     public function register(Request $request)
     {
-        $user = UserService::register($request);
-
-        if ($user !== null) {
-            return response($user, 200);
-        }
+        return $this->userService->register($request);
     }
 
-    /**
-     * Checks request parameters and tries to log in
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-     */
+
     public function login(Request $request)
     {
-        return UserService::login($request);
+        return $this->userService->login($request);
     }
 
 }
