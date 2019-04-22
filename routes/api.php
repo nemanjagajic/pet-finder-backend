@@ -19,6 +19,11 @@ Route::post('/users/register', 'UserController@register');
 Route::post('/users/login', 'UserController@login');
 
 Route::apiResource('/pets', 'PetController');
+Route::get('/pets/{id}/comments', 'PetController@getComments');
 Route::apiResource('/petAds', 'PetAdController');
+Route::get('/petAds/{id}/comments', 'PetAdController@getComments');
 Route::get('/lostPets', 'PetAdController@getLostPets');
 Route::get('/adoptingPets', 'PetAdController@getAdoptingPets');
+
+Route::apiResource('/petComments', 'PetCommentController');
+Route::apiResource('/petAdComments', 'PetAdCommentController');

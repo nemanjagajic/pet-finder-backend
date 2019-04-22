@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Pet;
+use App\PetComment;
 
 
 class PetService
@@ -24,7 +25,7 @@ class PetService
 
         $imageName = $petData->image ? $this->fileService->saveImage($petData->image) : '';
 
-        $pet = new Pet;
+        $pet = new Pet();
         $pet->image = $imageName;
         $pet->userId = $petData->userId;
         $pet->description = $petData->description;
@@ -37,6 +38,24 @@ class PetService
 
         if ($pet->save()) {
             return $pet;
+        }
+
+        return null;
+    }
+
+    public function saveComment($commentData): PetComment
+    {
+        $commentData->validate([
+           'petId' => 'required',
+           'content' => 'required'
+        ]);
+
+        $comment = new PetComment();
+        $comment->content = $commentData->content;
+        $comment->pet_id = $commentData->petId;
+
+        if ($comment ->save()) {
+            return $comment;
         }
 
         return null;

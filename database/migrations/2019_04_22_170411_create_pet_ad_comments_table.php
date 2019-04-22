@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class PetAds extends Migration
+class CreatePetAdCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class PetAds extends Migration
      */
     public function up()
     {
-        Schema::create('pet_ads', function (Blueprint $table) {
+        Schema::create('pet_ad_comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('userId');
-            $table->string('image')->nullable();
-            $table->text('description');
-            $table->string('locationInfo');
-            $table->string('phoneNumber');
-            $table->integer('type');
+            $table->text('content');
+            $table->integer('pet_ad_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('pet_ad_id')->references('id')->on('pet_ads');
         });
     }
 
@@ -32,6 +30,6 @@ class PetAds extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pets');
+        Schema::dropIfExists('pet_ad_comments');
     }
 }

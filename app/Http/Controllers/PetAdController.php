@@ -40,4 +40,10 @@ class PetAdController extends Controller
             return response($petAd, 200);
         }
     }
+
+    public function getComments($id)
+    {
+        $comments = PetAd::find($id)->comments;
+        return response($comments);
+    }
 }

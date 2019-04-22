@@ -14,4 +14,9 @@ class Pet extends Model
     protected $fillable = [
         'image', 'description', 'latitude', 'longitude', 'street', 'name', 'country', 'city'
     ];
+
+    public function comments()
+    {
+        return $this->hasMany('App\PetComment');
+    }
 }

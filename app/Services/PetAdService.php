@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\PetAd;
+use App\PetAdComment;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -35,6 +36,24 @@ class PetAdService
 
         if ($petAd->save()) {
             return $petAd;
+        }
+
+        return null;
+    }
+
+    public function saveComment($commentData): PetAdComment
+    {
+        $commentData->validate([
+            'petAdId' => 'required',
+            'content' => 'required'
+        ]);
+
+        $comment = new PetAdComment();
+        $comment->content = $commentData->content;
+        $comment->pet_ad_id = $commentData->petAdId;
+
+        if ($comment ->save()) {
+            return $comment;
         }
 
         return null;

@@ -29,4 +29,10 @@ class PetController extends Controller
             return response($pet, 200);
         }
     }
+
+    public function getComments($id)
+    {
+        $comments = Pet::find($id)->comments;
+        return response($comments);
+    }
 }

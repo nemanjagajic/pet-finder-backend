@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PetAd extends Model
 {
-    protected $table = 'petAds';
+    public function comments()
+    {
+        return $this->hasMany('App\PetAdComment');
+    }
 }
