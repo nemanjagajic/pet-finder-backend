@@ -45,12 +45,14 @@ class PetAdService
     {
         $commentData->validate([
             'petAdId' => 'required',
+            'userId' => 'required',
             'content' => 'required'
         ]);
 
         $comment = new PetAdComment();
+        $comment->pet_id = $commentData->petId;
+        $comment->user_id = $commentData->userId;
         $comment->content = $commentData->content;
-        $comment->pet_ad_id = $commentData->petAdId;
 
         if ($comment ->save()) {
             return $comment;

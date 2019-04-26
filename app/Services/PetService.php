@@ -47,12 +47,14 @@ class PetService
     {
         $commentData->validate([
            'petId' => 'required',
+           'userId' => 'required',
            'content' => 'required'
         ]);
 
         $comment = new PetComment();
-        $comment->content = $commentData->content;
         $comment->pet_id = $commentData->petId;
+        $comment->user_id = $commentData->userId;
+        $comment->content = $commentData->content;
 
         if ($comment ->save()) {
             return $comment;

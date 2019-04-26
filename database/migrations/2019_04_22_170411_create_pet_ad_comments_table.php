@@ -15,11 +15,13 @@ class CreatePetAdCommentsTable extends Migration
     {
         Schema::create('pet_ad_comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('content');
             $table->integer('pet_ad_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->text('content');
             $table->timestamps();
 
             $table->foreign('pet_ad_id')->references('id')->on('pet_ads');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
