@@ -50,7 +50,7 @@ class PetAdService
         ]);
 
         $comment = new PetAdComment();
-        $comment->pet_id = $commentData->petId;
+        $comment->pet_ad_id = $commentData->petAdId;
         $comment->user_id = $commentData->userId;
         $comment->content = $commentData->content;
 
