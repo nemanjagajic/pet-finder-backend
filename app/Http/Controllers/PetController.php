@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Pet;
 use App\Services\PetService;
 use Illuminate\Http\Request;
+use App\User;
 
 class PetController extends Controller
 {
@@ -17,7 +18,15 @@ class PetController extends Controller
 
     public function index()
     {
-        return response(Pet::get());
+        $pets = Pet::get();
+
+        $petsReversed = [];
+        foreach ($pets as $pet) {
+            $pet->fullName = User::where('id', $pet->userId)->get()->pluck('fullName')[0];
+            array_unshift($petsReversed, $pet);
+        }
+
+        return response($petsReversed);
     }
 
 
@@ -33,6 +42,13 @@ class PetController extends Controller
     public function getComments($id)
     {
         $comments = Pet::find($id)->comments;
-        return response($comments);
+
+        $commentsReversed = [];
+        foreach ($comments as $comment) {
+            $comment->fullName = User::where('id', $comment->user_id)->get()->pluck('fullName')[0];
+            array_unshift($commentsReversed, $comment);
+        }
+
+        return response($commentsReversed);
     }
 }

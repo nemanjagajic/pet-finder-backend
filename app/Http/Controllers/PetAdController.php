@@ -44,6 +44,12 @@ class PetAdController extends Controller
     public function getComments($id)
     {
         $comments = PetAd::find($id)->comments;
-        return response($comments);
+
+        $reverserComments = [];
+        foreach ($comments as $comment) {
+            array_unshift($reverserComments, $comment);
+        }
+
+        return response($reverserComments);
     }
 }
