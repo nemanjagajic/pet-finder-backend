@@ -1,0 +1,17 @@
+version: "3"
+services:
+  pet-finder-db:
+    image: mariadb:10.2
+    container_name: pet-finder-db
+    environment:
+      MYSQL_DATABASE: petfinder
+      MYSQL_USER: petfinder
+      MYSQL_PASSWORD: petfinder
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - petfinderdb:/var/lib/mysql
+
+volumes:
+  petfinderdb:

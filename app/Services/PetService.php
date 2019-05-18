@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use App\Constants\Constants;
 use App\Pet;
 use App\PetComment;
 
@@ -23,7 +24,13 @@ class PetService
             'longitude' => 'required'
         ]);
 
-        $imageName = $petData->image ? $this->fileService->saveImage($petData->image) : '';
+        $imageName = $petData->image
+            ? $this->fileService->resizeAndSaveImage(
+                $petData->image,
+                Constants::IMAGE_WIDTH,
+                Constants::IMAGE_HEIGHT
+            )
+            : '';
 
         $pet = new Pet();
         $pet->image = $imageName;
