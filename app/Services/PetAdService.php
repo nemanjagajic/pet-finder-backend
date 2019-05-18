@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Services;
+use App\Constants\Constants;
 use App\PetAd;
 use App\PetAdComment;
-use Illuminate\Support\Facades\Storage;
 
 
 class PetAdService
@@ -24,7 +24,13 @@ class PetAdService
             'phoneNumber' => 'required'
         ]);
 
-        $imageName = $petAdData->image ? $this->fileService->saveImage($petAdData->image) : '';
+        $imageName = $petAdData->image
+            ? $this->fileService->resizeAndSaveImage(
+                $petAdData->image,
+                Constants::IMAGE_WIDTH,
+                Constants::IMAGE_HEIGHT
+            )
+            : '';
 
         $petAd = new PetAd;
         $petAd->image = $imageName;
