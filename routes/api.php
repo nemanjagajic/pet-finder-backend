@@ -17,6 +17,7 @@ Route::get('/users', 'UserController@index');
 Route::get('/users/{id}', 'UserController@getById');
 Route::post('/users/register', 'UserController@register');
 Route::post('/users/login', 'UserController@login');
+Route::put('/users/{id}', 'UserController@update');
 
 Route::apiResource('/pets', 'PetController');
 Route::get('/pets/{id}/comments', 'PetController@getComments');

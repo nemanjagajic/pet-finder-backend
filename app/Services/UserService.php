@@ -49,4 +49,22 @@ class UserService
 
         return response($fetchedUsers, 200);
     }
+
+    public function update($userData, $id)
+    {
+        $userData->validate([
+            'username' => 'required',
+            'fullName' => 'required',
+            'password' => 'required'
+        ]);
+
+        User::where('id', $id)->update([
+            'username' => $userData->username,
+            'fullName' => $userData->fullName,
+            'password' => $userData->password,
+            'phoneNumber' => $userData->phoneNumber
+        ]);
+
+        return User::where('id', $id)->get();
+    }
 }
