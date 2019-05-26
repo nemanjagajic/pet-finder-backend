@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Constants\Constants;
+use App\Constants\PathConstants;
 use App\Pet;
 use App\PetComment;
 
@@ -26,6 +27,7 @@ class PetService
 
         $imageName = $petData->image
             ? $this->fileService->resizeAndSaveImage(
+                PathConstants::PETS_PATH,
                 $petData->image,
                 Constants::IMAGE_WIDTH,
                 Constants::IMAGE_HEIGHT
@@ -53,9 +55,9 @@ class PetService
     public function saveComment($commentData): PetComment
     {
         $commentData->validate([
-           'petId' => 'required',
-           'userId' => 'required',
-           'content' => 'required'
+            'petId' => 'required',
+            'userId' => 'required',
+            'content' => 'required'
         ]);
 
         $comment = new PetComment();

@@ -1,11 +1,21 @@
 <?php
 
 namespace App\Services;
+use App\Constants\Constants;
+use App\Constants\PathConstants;
 use App\User;
 
 
 class UserService
 {
+
+    private $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     public function register($registerData)
     {
         $registerData->validate([
@@ -58,12 +68,32 @@ class UserService
             'password' => 'required'
         ]);
 
-        User::where('id', $id)->update([
-            'username' => $userData->username,
-            'fullName' => $userData->fullName,
-            'password' => $userData->password,
-            'phoneNumber' => $userData->phoneNumber
-        ]);
+        if ($userData->image) {
+            $loggedUser = User::find($id);
+            $this->fileService->deleteImage(PathConstants::USERS_PATH.$id."/".$loggedUser->image);
+
+            $imageName = $this->fileService->resizeAndSaveImage(
+                PathConstants::USERS_PATH.$id."/",
+                $userData->image,
+                Constants::IMAGE_WIDTH,
+                Constants::IMAGE_HEIGHT
+            );
+
+            User::where('id', $id)->update([
+                'username' => $userData->username,
+                'fullName' => $userData->fullName,
+                'password' => $userData->password,
+                'phoneNumber' => $userData->phoneNumber,
+                'image' => $imageName
+            ]);
+        } else {
+            User::where('id', $id)->update([
+                'username' => $userData->username,
+                'fullName' => $userData->fullName,
+                'password' => $userData->password,
+                'phoneNumber' => $userData->phoneNumber,
+            ]);
+        }
 
         return User::where('id', $id)->get();
     }

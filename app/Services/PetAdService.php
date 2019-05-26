@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Constants\Constants;
+use App\Constants\PathConstants;
 use App\PetAd;
 use App\PetAdComment;
 
@@ -26,6 +27,7 @@ class PetAdService
 
         $imageName = $petAdData->image
             ? $this->fileService->resizeAndSaveImage(
+                PathConstants::PETS_PATH,
                 $petAdData->image,
                 Constants::IMAGE_WIDTH,
                 Constants::IMAGE_HEIGHT
